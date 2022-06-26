@@ -1,9 +1,10 @@
 <?php
 session_start();
 
-#if(!isset($_SESSION['user']) ||  empty($_SESSION['user'])){
-#header('Location: login.php');
-#}
+if(!isset($_SESSION['member_id']) ||  empty($_SESSION['member_id'])){
+  header('Location: login/login.php');
+}
+
 
 if (isset($_SESSION['projectID']) && !empty($_SESSION['projectID'])) {
   $projectID = $_SESSION['projectID'];
@@ -115,6 +116,7 @@ function tripleConstraint($array) {
   <h2>Questions</h2>
   <p>Sections</p>
   <button type="submit" form="form1">Submit All Answers</button>
+  <a href="menu.php"><button>Back to menu</button></a>
   <div class="tab">
     <button class="tablinks" onclick="openSection(event, 'instruction')">Instructions</button>
     <button class="tablinks" onclick="openSection(event, 'projchar')">Project Characteristics</button>

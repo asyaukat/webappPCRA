@@ -1,6 +1,10 @@
 <?php
-
 session_start();
+
+if(!isset($_SESSION['member_id']) ||  empty($_SESSION['member_id'])){
+  header('Location: login/login.php');
+}
+
 require_once "sql.php";
 if (isset($_SESSION['projectID']) && !empty($_SESSION['projectID'])) {
   $projectID = $_SESSION['projectID'];

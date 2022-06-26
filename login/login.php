@@ -21,7 +21,7 @@ if(isset($_SESSION["locked"])){
 }
 
 if ($isLoggedIn) {
-    $util->redirect("menu.php");
+    $util->redirect("../menu.php");
 }
 
 if (! empty($_POST["login"])) {

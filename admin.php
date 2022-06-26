@@ -1,3 +1,13 @@
+<?php 
+session_start();
+
+if(!isset($_SESSION['member_id']) ||  empty($_SESSION['member_id'])){
+  header('Location: login/login.php');
+}
+
+
+?>
+
 <!DOCTYPE html>
 <html>
 

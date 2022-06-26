@@ -1,9 +1,9 @@
 <?php 
 session_start();
 
-#if(!isset($_SESSION['user']) ||  empty($_SESSION['user'])){
-    #header('Location: login.php');
-#}
+if(!isset($_SESSION['member_id']) ||  empty($_SESSION['member_id'])){
+    header('Location: login/login.php');
+}
 
 
 if (!empty($_POST['viewquestions'])){
