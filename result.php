@@ -60,7 +60,8 @@ if (isset($_SESSION['projectID']) && !empty($_SESSION['projectID'])) {
 </head>
 
 <body>
-  <h1>Summary and Result</h1>
+  <h1>Summary and Result</h1><br>
+  <a href="menu.php"><button>Back to menu</button></a>
   <div class="tab">
     <button class="tablinks" onclick="openSection(event, 'projchar')">Project Characteristics</button>
     <button class="tablinks" onclick="openSection(event, 'stramanagerisk')">Strategic Management Risks</button>
