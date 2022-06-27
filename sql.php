@@ -7,7 +7,7 @@ class crud
   function __construct()
   {
     $this->db = new PDO(
-      'mysql:host=118.101.82.225;port=3306;dbname=pcrat',
+      'mysql:host=118.100.40.126;port=3306;dbname=pcrat',
       'remote_user',
       'asd123asd123'
     );
@@ -63,10 +63,11 @@ class crud
     }
   }
 
-  function projectList()
+  function projectList($memberid)
   {
-    $sql = "SELECT * FROM project";
+    $sql = "SELECT * FROM project where memberid = ? ";
     $stmt = $this->db->prepare($sql);
+    $stmt->bindParam(1,$memberid);
     $stmt->execute();
 
     while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
@@ -175,6 +176,8 @@ class crud
     }
   }
 
+
+  
   function getSectionResultBySection($projectID, $sectionID)
   {
     $sql = "SELECT c.name as sectionname,sum(a.value)as value,c.maxscore as maxscore FROM project_question a JOIN question b ON (a.questionID = b.id), section c where a.projectID = ? and b.sectionID = ? and c.id = ?";
@@ -241,4 +244,21 @@ class crud
       return $success = "success";
     }
   }
+
+  function readAQuestion($id){
+    $sql = "select id,knowledgearea,question,clarification from question where id= ?";
+    $stmt = $this->db->prepare($sql);
+    $stmt->bindParam(1,$id);
+    $stmt ->execute();
+
+    while ( $row =$stmt->fetch(PDO::FETCH_ASSOC) ) {
+        $resultset[] = $row;
+      }
+      if(!empty($resultset)){
+                  return $resultset;
+      }
+      else{
+        return array();
+      }
+    }
 }

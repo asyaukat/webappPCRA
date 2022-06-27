@@ -1,6 +1,6 @@
 <?php
 class DBController {
-	private $host = "118.101.82.225";
+	private $host = "118.100.40.126";
 	private $user = "remote_user";
 	private $password = "asd123asd123";
 	private $database = "pcrat";

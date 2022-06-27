@@ -1,9 +1,18 @@
 <?php
 session_start();
+if(!empty($_POST)){
+  if($_POST['action'] == 'logout'){
+    session_destroy();
+    header('Location: login/login.php');
+  }
+}
 
-if(!isset($_SESSION['member_id']) ||  empty($_SESSION['member_id'])){
+
+if (!isset($_SESSION['member_id']) || empty($_SESSION['member_id'])) {
   header('Location: login/login.php');
 }
+else
+  $memberid = $_SESSION['member_id'];
 
 ?>
 <!DOCTYPE html>
@@ -42,6 +51,8 @@ if(!isset($_SESSION['member_id']) ||  empty($_SESSION['member_id'])){
       </li>
     </ul>
   </nav>
+  <form method="POST"><button name="action" value="logout">Log Out</button></form>
+  
   <div style="height:80vh;width:80%;background-color:white;margin: 50px auto">
     <div style="text-align:center;width:100%">
       <div style="display:inline-block;">
@@ -49,36 +60,36 @@ if(!isset($_SESSION['member_id']) ||  empty($_SESSION['member_id'])){
         <table class="table">
           <thead class="thead-dark">
             <tr>
-            <th scope="col">Project ID</th>
-            <th scope="col">Project Name</th>
-            <th scope="col">Owner</th>
-            <th scope="col">Funds</th>
-            <th scope="col" >Project Duration</th>
-            <th scope="col" >Mode</th>
-            <th scope="col">Question</th>
-            <th scope="col">Result</th>
+              <th scope="col">Project ID</th>
+              <th scope="col">Project Name</th>
+              <th scope="col">Owner</th>
+              <th scope="col">Funds</th>
+              <th scope="col">Project Duration</th>
+              <th scope="col">Mode</th>
+              <th scope="col">Question</th>
+              <th scope="col">Result</th>
             </tr>
           </thead>
           <tbody>
             <form method="POST" action="menuController.php">
-          <?php
-          require_once "sql.php";
-          $db = new crud();
-          $result = $db->projectList();
+              <?php
+              require_once "sql.php";
+              $db = new crud();
+              $result = $db->projectList($memberid);
 
-          foreach ($result as $list) {
-            echo '<tr>
+              foreach ($result as $list) {
+                echo '<tr>
                             <th scope="row">' . $list['projectID'] . '</td>
                             <td>' . $list['pName'] . '</td>
                             <td>' . $list['owner'] . '</td>
                             <td>' . $list['funds'] . '</td>
                             <td>' . $list['pDuration'] . '</td>
                             <td>' . $list['mode'] . '</td>
-                            <td><button type="submit" class="btn btn-dark" name="viewquestions" value="'.$list['projectID'].'"/>View Questions</button></td>
-                            <td><button type="submit" class="btn btn-dark" name="viewresult" value="'.$list['projectID'].'"/>View Result</button></td>
+                            <td><button type="submit" class="btn btn-dark" name="viewquestions" value="' . $list['projectID'] . '"/>View Questions</button></td>
+                            <td><button type="submit" class="btn btn-dark" name="viewresult" value="' . $list['projectID'] . '"/>View Result</button></td>
                           </tr>';
-          }
-          ?>
+              }
+              ?>
             </form>
           </tbody>
           </form>

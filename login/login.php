@@ -1,6 +1,9 @@
 <?php
 session_start();
 
+
+
+
 require_once "Auth.php";
 require_once "Util.php";
 
@@ -78,7 +81,7 @@ if (! empty($_POST["login"])) {
         } else {
             $util->clearAuthCookie();
         }
-        $util->redirect("menu.php");
+        $util->redirect("../menu.php");
     }
 }
 ?>
@@ -171,3 +174,4 @@ body {
         </div>
     </div>
 </form>
+
