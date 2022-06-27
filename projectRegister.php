@@ -24,6 +24,7 @@
         $funds = $_POST['funds'];
         $pDur = $_POST['pDur'];
         $mode = $_POST['mode'];
+        $memberid = $_SESSION['member_id'];
 
         if(strlen($pName) < 1 || strlen($own) < 1 || strlen($funds) < 1 || strlen($pDur) < 1){
             $failure = "Input cannot be blank!";
@@ -31,7 +32,7 @@
             if(in_array($mode, array(""))){
                 $failure="Select mode for your project!";
             } else {
-                $result = $db->register($pName, $own, $funds, $pDur, $mode);
+                $result = $db->register($pName, $own, $funds, $pDur, $mode, $memberid);
 
                 if($result){
                     $success = "Project Registration Success!";

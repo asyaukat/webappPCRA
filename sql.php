@@ -47,15 +47,16 @@ class crud
     }
   }
 
-  function register($pName, $own, $funds, $pDur, $mode)
+  function register($pName, $own, $funds, $pDur, $mode, $memberid)
   {
-    $sql = "INSERT INTO project (pName, owner, funds, pDuration, mode) VALUES (?, ?, ?, ?, ?)";
+    $sql = "INSERT INTO project (pName, owner, funds, pDuration, mode, memberid) VALUES (?, ?, ?, ?, ?,?)";
     $stmt = $this->db->prepare($sql);
     $stmt->bindParam(1, $pName);
     $stmt->bindParam(2, $own);
     $stmt->bindParam(3, $funds);
     $stmt->bindParam(4, $pDur);
     $stmt->bindParam(5, $mode);
+    $stmt->bindParam(6, $memberid);
     $stmt->execute();
 
     if ($stmt) {
