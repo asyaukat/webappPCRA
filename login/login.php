@@ -1,9 +1,6 @@
 <?php
 session_start();
 
-
-
-
 require_once "Auth.php";
 require_once "Util.php";
 
@@ -13,41 +10,45 @@ $util = new Util();
 
 require_once "authCookieSessionValidate.php";
 
-if(isset($_SESSION["locked"])){
+if (isset($_SESSION["locked"])) {
     $difference = time() - $_SESSION["locked"];
-    if ($difference > 3){
+    if ($difference > 3) {
         unset($_SESSION["locked"]);
         unset($_SESSION["login_attempts"]);
         unset($_SESSION["error"]);
     }
-   
 }
 
 if ($isLoggedIn) {
     $util->redirect("../menu.php");
 }
 
-if (! empty($_POST["login"])) {
+if (!empty($_POST["login"])) {
     $isAuthenticated = false;
-    
+
     $username = $_POST["member_name"];
     $password = $_POST["member_password"];
 
     $user = $auth->getMemberByUsername($username);
-    if (isset($_SESSION["login_attempts"])){
-        if (isset($user[0]["member_password"]) > 0){
+    if (isset($_SESSION["login_attempts"])) {
+        if (isset($user[0]["member_password"]) > 0) {
             if (password_verify($password, $user[0]["member_password"])) {
                 $isAuthenticated = true;
                 unset($_SESSION["login_attempts"]);
-            }else{
+            } else {
                 $_SESSION["login_attempts"] += 1;
+                $_SESSION["try"] = (3 - $_SESSION["login_attempts"]) . " more attempts";
                 $_SESSION["invalid"] = "Invalid Password";
-                if($_SESSION["login_attempts"] > 2){
-                    $_SESSION["error"] = "Attempt limit reached";
+                if ($_SESSION["login_attempts"] > 2) {
+                    $_SESSION["error"] = "There is an error";
+                    $_SESSION["attempts"] = "Attempts limit reached";
+                    unset($_SESSION["invalid"]);
+                    unset($_SESSION["login_attempts"]);
+                    unset($_SESSION["try"]);
                 }
             }
         } else {
-            $message = "Username doesn't exist";
+            $_SESSION["messages"] = "Username doesn't exist";
         }
     } else {
         $_SESSION["login_attempts"] = 0;
@@ -55,25 +56,25 @@ if (! empty($_POST["login"])) {
 
     if ($isAuthenticated) {
         $_SESSION["member_id"] = $user[0]["member_id"];
-        
+
         // Set Auth Cookies if 'Remember Me' checked
-        if (! empty($_POST["remember"])) {
+        if (!empty($_POST["remember"])) {
             setcookie("member_login", $username, $cookie_expiration_time);
-            
+
             $random_password = $util->getToken(16);
             setcookie("random_password", $random_password, $cookie_expiration_time);
-            
+
             $random_selector = $util->getToken(32);
             setcookie("random_selector", $random_selector, $cookie_expiration_time);
-            
+
             $random_password_hash = password_hash($random_password, PASSWORD_DEFAULT);
             $random_selector_hash = password_hash($random_selector, PASSWORD_DEFAULT);
-            
+
             $expiry_date = date("Y-m-d H:i:s", $cookie_expiration_time);
-            
+
             // mark existing token as expired
             $userToken = $auth->getTokenByUsername($username, 0);
-            if (! empty($userToken[0]["id"])) {
+            if (!empty($userToken[0]["id"])) {
                 $auth->markAsExpired($userToken[0]["id"]);
             }
             // Insert new token
@@ -85,93 +86,141 @@ if (! empty($_POST["login"])) {
     }
 }
 ?>
-<style>
-body {
-    font-family: Arial;
-}
+<!DOCTYPE html>
+<html>
 
-#frmLogin {
-    padding: 20px 40px 40px 40px;
-    background: #d7eeff;
-    border: #acd4f1 1px solid;
-    color: #333;
-    border-radius: 2px;
-    width: 300px;
-}
+<head>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@500;700&display=swap" rel="stylesheet">
 
-.field-group {
-    margin-top: 15px;
-}
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@700&display=swap" rel="stylesheet">
 
-.input-field {
-    padding: 12px 10px;
-    width: 100%;
-    border: #A3C3E7 1px solid;
-    border-radius: 2px;
-    margin-top: 5px
-}
+<link rel="stylesheet" href="../css/style.css">
 
-.form-submit-button {
-    background: #3a96d6;
-    border: 0;
-    padding: 10px 0px;
-    border-radius: 2px;
-    color: #FFF;
-    text-transform: uppercase;
-    width: 100%;
-}
+    <style>
+        
+        
+        #frmLogin {
+            padding: 20px 40px 40px 40px;
+            background: #00B98E;
+            border: black 0px solid;
+            color: #333;
+            border-radius: 2px;
+            width: 300px;
+            box-shadow: 10px 10px 5px lightblue;
+        }
 
-.error-message {
-    text-align: center;
-    color: #FF0000;
-}
-</style>
+        .field-group {
+            margin-top: 15px;
+        }
 
-<form action="" method="post" id="frmLogin">
-    <div class="error-message"><?php if(isset($message)) { echo $message; } ?></div>
-    <?php if(isset($_SESSION["invalid"])) { ?>
-        <div class="error-message"><?= $_SESSION["invalid"];  ?></div>
-    <?php unset($_SESSION["invalid"]); } ?>
-    <div class="field-group">
-        <div>
-            <label for="login">Username</label>
-        </div>
-        <div>
-            <input name="member_name" type="text"
-                value="<?php if(isset($_COOKIE["member_login"])) { echo $_COOKIE["member_login"]; } ?>"
-                class="input-field">
+        .input-field {
+            padding: 12px 10px;
+            width: 100%;
+            border: #A3C3E7 1px solid;
+            border-radius: 2px;
+            margin-top: 5px
+        }
+
+        .form-submit-button {
+            background: #3a96d6;
+            border: 0;
+            padding: 10px 0px;
+            border-radius: 2px;
+            color: #FFF;
+            text-transform: uppercase;
+            width: 100%;
+        }
+
+        .error-message {
+            text-align: center;
+            color: #FF0000;
+        }
+
+        .formbody{
+            display:inline-block;
+            margin:0 auto;
+        }
+
+    </style>
+</head>
+
+<body>
+    <div class="navbar">
+        <a href="login.php">Project Complexity Risk Assessment</a>
+    </div>
+    <div style="margin: 0; display: inline-block;text-align:center;width:100%;height:100%;">
+        <div style="margin-top:5%;margin-right: auto;margin-left:auto;width:50%;">
+        <div class="formbody">
+            <form action="" method="post" id="frmLogin" >
+
+                <?php if (isset($_SESSION["messages"])) { ?>
+                    <div class="error-message"><?= $_SESSION["messages"];  ?></div>
+                <?php unset($_SESSION["messages"]);
+                } ?>
+
+                <?php if (isset($_SESSION["invalid"])) { ?>
+                    <div class="error-message"><?= $_SESSION["invalid"];  ?></div>
+                <?php unset($_SESSION["invalid"]);
+                } ?>
+
+                <?php if (isset($_SESSION["try"])) { ?>
+                    <div class="error-message"><?= $_SESSION["try"];  ?></div>
+                <?php unset($_SESSION["try"]);
+                } ?>
+
+                <?php if (isset($_SESSION["attempts"])) { ?>
+                    <div class="error-message"><?= $_SESSION["attempts"];  ?></div>
+                <?php unset($_SESSION["attempts"]);
+                } ?>
+
+                <div class="field-group">
+                    <div>
+                        <label for="login">Username</label>
+                    </div>
+                    <div>
+                        <input name="member_name" type="text" value="<?php if (isset($_COOKIE["member_login"])) {
+                                                                            echo $_COOKIE["member_login"];
+                                                                        } ?>" class="input-field">
+                    </div>
+                </div>
+                <div class="field-group">
+                    <div>
+                        <label for="password">Password</label>
+                    </div>
+                    <div>
+                        <input name="member_password" type="password" value="<?php if (isset($_COOKIE["member_password"])) {
+                                                                                    echo $_COOKIE["member_password"];
+                                                                                } ?>" class="input-field">
+                    </div>
+                </div>
+                <div class="field-group">
+                    <div>
+                        <input type="checkbox" name="remember" id="remember" <?php if (isset($_COOKIE["member_login"])) { ?> checked <?php } ?> /> <label for="remember-me">Remember me</label>
+                    </div>
+                </div>
+
+                <div class="field-group">
+                    <div>
+                        <?php
+                        if (isset($_SESSION["error"])) {
+                            $_SESSION["locked"] = time();
+                            echo "<p>Please wait for 3 seconds</p>";
+                        } else {
+                        ?>
+                            <input type="submit" name="login" value="Login" class="form-submit-button"></span>
+                        <?php } ?>
+                    </div>
+                </div>
+            </form>
+            </div>
         </div>
     </div>
-    <div class="field-group">
-        <div>
-            <label for="password">Password</label>
-        </div>
-        <div>
-            <input name="member_password" type="password"
-                value="<?php if(isset($_COOKIE["member_password"])) { echo $_COOKIE["member_password"]; } ?>"
-                class="input-field">
-        </div>
-    </div>
-    <div class="field-group">
-        <div>
-            <input type="checkbox" name="remember" id="remember"
-                <?php if(isset($_COOKIE["member_login"])) { ?> checked
-                <?php } ?> /> <label for="remember-me">Remember me</label>
-        </div>
-    </div>
-   
-    <div class="field-group">
-        <div>
-        <?php
-            if (isset($_SESSION["error"])){
-                $_SESSION["locked"] = time();
-                echo "<p>Please wait for 3 seconds</p>";   
-            } else {
-           ?>
-               <input type="submit" name="login" value="Login"
-                   class="form-submit-button"></span>
-           <?php } ?>
-        </div>
-    </div>
-</form>
+</body>
 
+
+
+</html>
