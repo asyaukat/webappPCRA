@@ -19,11 +19,13 @@ body {font-family: Arial;}
 .tab {
   overflow: hidden;
   border: 1px solid #ccc;
-  background-color: #f1f1f1;
+  background-color: #1B2430;
+  display: block;
+  
 }
 
 /* Style the buttons inside the tab */
-.tab button {
+.tab button,.barlink {
   background-color: inherit;
   float: left;
   border: none;
@@ -31,17 +33,36 @@ body {font-family: Arial;}
   cursor: pointer;
   padding: 14px 16px;
   transition: 0.3s;
+  font-weight:bold;
+  font-family: 'Inter', sans-serif;
   font-size: 17px;
+  color: white;
+}
+
+.barlink {
+  background-color: inherit;
+  float: left;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  padding: 14px 16px;
+  transition: 0.3s;
+  font-weight:bold;
+  font-family: 'Inter', sans-serif;
+  font-size: 17px;
+  color: white;
 }
 
 /* Change background color of buttons on hover */
-.tab button:hover {
+.tab button:hover,.barlink:hover {
   background-color: #ddd;
+  color: #1B2430;
 }
 
 /* Create an active/current tablink class */
 .tab button.active {
   background-color: #ccc;
+  color:#4E235F;
 }
 
 /* Style the tab content */
@@ -51,29 +72,51 @@ body {font-family: Arial;}
   border: 1px solid #ccc;
   border-top: none;
 }
+
+td,th{
+      background-color: white;
+      color:black;
+    }
+
+    h1 {
+    float:left;
+    text-align: center;
+    padding: 14px 16px;
+    color: #f2f2f2;
+    text-decoration: none;
+    font-size: 30px;
+    font-weight: bold;
+    font-family: 'Inter', sans-serif;
+    text-shadow: 3px 3px 6px black;
+}
+
 </style>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<link rel="stylesheet" href="css/style.css">
+
 </head>
 <body>
 
-<h2>Information</h2>
+<h1 style="display:block; width:100%;">Information</h1>
 
 <div class="tab">
   <button class="tablinks" onclick="openCity(event, 'calcMethod')">Calculation Method</button>
   <button class="tablinks" onclick="openCity(event, 'ques')">Questions</button>
   <button class="tablinks" onclick="openCity(event, 'secDes')">Section Description</button>
   <button class="tablinks" onclick="openCity(event, 'defi')">Definition</button>
+  <div style="float:right"><a href="menuController.php" class="barlink">Project List</a></div>
 </div>
 
 <div id="calcMethod" class="tabcontent">
-  <h3>Calculation Method</h3>
-  <table border="1">
-    <th></th>
+
+  <table class="table table-bordered" style="color:white;font-family: 'Inter', sans-serif;">
+    <thead class="thead-dark" style="background-color:black;">
+    <th>#</th>
     <th>Method</th>
     <?php
     require_once "sql.php";
     $db = new crud();
     $result = $db->calcMethod();
-
     foreach ($result as $method) {
       echo '<tr>
               <td>' . $method['id'] . '</td>
@@ -81,14 +124,16 @@ body {font-family: Arial;}
               </tr>';
     }
     ?>
+     </thead>
 
   </table>
 </div>
 
 <div id="ques" class="tabcontent">
-  <h3>Questions</h3>
-  <table border="1">
-    <th></th>
+  
+<table class="table table-bordered" style="color:white;font-family: 'Inter', sans-serif;">
+    <thead class="thead-dark" style="background-color:black;">
+    <th>#</th>
     <th>Question</th>
     <?php
     require_once "sql.php";
@@ -143,14 +188,14 @@ body {font-family: Arial;}
             </tr>';
     }
     ?>
-
+   </thead>
   </table>
 </div>
 
 <div id="secDes" class="tabcontent">
-  <h3>Section Description</h3>
-  <table border="1">
-    <th></th>
+<table class="table table-bordered" style="color:white;font-family: 'Inter', sans-serif;">
+    <thead class="thead-dark" style="background-color:black;">
+    <th>#</th>
     <th>Section</th>
     <th>Description</th>
     <?php
@@ -166,14 +211,14 @@ body {font-family: Arial;}
             </tr>';
     }
     ?>
-
+</thead>
   </table>
 </div>
 
 <div id="defi" class="tabcontent">
-  <h3>Definition</h3>
-  <table border="1">
-    <th></th>
+<table class="table table-bordered" style="color:white;font-family: 'Inter', sans-serif;">
+    <thead class="thead-dark" style="background-color:black;">
+    <th>#</th>
     <th>Complexity and Risk Level</th>
     <th>Definition</th>
     <th>Minimum Score</th>
@@ -193,7 +238,7 @@ body {font-family: Arial;}
             </tr>';
     }
     ?>
-
+</thead>
   </table>
 </div>
 

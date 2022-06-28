@@ -30,6 +30,9 @@ if(!empty($_SESSION['member_type'])){
             $_SESSION['projectID'] = $_POST['viewresult'];
             header('Location: result.php');
         }
+        else{
+            header('Location: menu.php');
+        }
     }
     
 }

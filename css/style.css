@@ -39,6 +39,8 @@ input[type="text"]{
     text-shadow: 3px 3px 6px black;
 }
 
+
+
 .navbar a:hover {
     background-color:#ddd;
     color:black;
