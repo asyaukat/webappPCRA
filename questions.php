@@ -140,6 +140,168 @@ function tripleConstraint($array) {
 }
   </style>
 
+<style>
+body {font-family: Arial;}
+
+/* Style the tab */
+.tab {
+  overflow: hidden;
+  border: 1px solid #ccc;
+  background-color: #1B2430;
+  display: block;
+  
+}
+
+/* Style the buttons inside the tab */
+.tab button,.barlink {
+  background-color: inherit;
+  float: left;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  padding: 14px 16px;
+  transition: 0.3s;
+  font-weight:bold;
+  font-family: 'Inter', sans-serif;
+  font-size: 17px;
+  color: white;
+}
+
+.barlink {
+  background-color: inherit;
+  float: left;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  padding: 14px 16px;
+  transition: 0.3s;
+  font-weight:bold;
+  font-family: 'Inter', sans-serif;
+  font-size: 17px;
+  color: white;
+}
+
+/* Change background color of buttons on hover */
+.tab button:hover,.barlink:hover {
+  background-color: #ddd;
+  color: #1B2430;
+}
+
+/* Create an active/current tablink class */
+.tab button.active {
+  background-color: #ccc;
+  color:#4E235F;
+}
+
+/* Style the tab content */
+.tabcontent {
+  display: none;
+  padding: 6px 12px;
+  border: 1px solid #ccc;
+  border-top: none;
+}
+
+td,th{
+      background-color: white;
+      color:black;
+    }
+
+    h1 {
+    float:left;
+    text-align: center;
+    padding: 14px 16px;
+    color: #f2f2f2;
+    text-decoration: none;
+    font-size: 30px;
+    font-weight: bold;
+    font-family: 'Inter', sans-serif;
+    text-shadow: 3px 3px 6px black;
+}
+
+</style>
+<link rel="stylesheet" href="css/style.css">
+<style>
+body {font-family: Arial;}
+
+/* Style the tab */
+.tab {
+  overflow: hidden;
+  border: 1px solid #ccc;
+  background-color: #1B2430;
+  display: block;
+  
+}
+
+/* Style the buttons inside the tab */
+.tab button,.barlink {
+  background-color: inherit;
+  float: left;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  padding: 14px 16px;
+  transition: 0.3s;
+  font-weight:bold;
+  font-family: 'Inter', sans-serif;
+  font-size: 17px;
+  color: white;
+}
+
+.barlink {
+  background-color: inherit;
+  float: left;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  padding: 14px 16px;
+  transition: 0.3s;
+  font-weight:bold;
+  font-family: 'Inter', sans-serif;
+  font-size: 17px;
+  color: white;
+}
+
+/* Change background color of buttons on hover */
+.tab button:hover,.barlink:hover {
+  background-color: #ddd;
+  color: #1B2430;
+}
+
+/* Create an active/current tablink class */
+.tab button.active {
+  background-color: #ccc;
+  color:#4E235F;
+}
+
+/* Style the tab content */
+.tabcontent {
+  display: none;
+  padding: 6px 12px;
+  border: 1px solid #ccc;
+  border-top: none;
+}
+
+td,th{
+      background-color: white;
+      color:black;
+    }
+
+    h1 {
+    float:left;
+    text-align: center;
+    padding: 14px 16px;
+    color: #f2f2f2;
+    text-decoration: none;
+    font-size: 30px;
+    font-weight: bold;
+    font-family: 'Inter', sans-serif;
+    text-shadow: 3px 3px 6px black;
+    
+}
+h3 {
+  color:white;
+}
+</style>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 </head>
 
@@ -150,7 +312,7 @@ function tripleConstraint($array) {
       <a class="navlink" href="menu.php">Project List</a>
     </div>
   </div>
-  <p style="font-size: 26px; font-weight: bold; padding-top: 10px;">Sections</p>
+  <p style="font-size: 26px; font-weight: bold; padding-top: 10px;color:white">Sections</p>
   <button type="submit" form="form1">Submit All Answers</button>
   <div class="tab">
     <button class="tablinks" onclick="openSection(event, 'instruction')">Instructions</button>
@@ -165,16 +327,17 @@ function tripleConstraint($array) {
 
   <form method="POST" action="questions.php" id="form1">
     <div id="instruction" class="tabcontent">
-      <h1 >Instructions</h1>
-    <p style = "white-space: pre-wrap"> 
+      <h1 style="width:100%">Instructions</h1>
+    <p style = "white-space: pre-wrap;color:white"> 
 1.All question must be answered. If you are sure a question does not apply to your project, answer with the lowest score ("1") for that question;
 2.If the answer to a question is unknown, answer with the highest score ("5") for that question; and
 3.If you answer "1" to Question 2 in the "Project characteristics" section (3.1), questions in the "Procurement risks" section (3.3) should be answered with a "1" only.</p>
     </div>
     <div id="projchar" class="tabcontent">
       <h3>Project Characteristics</h3>
-      <table border="1">
-        <th></th>
+      <table class="table table-bordered" style="color:white;font-family: 'Inter', sans-serif;">
+      <thead class="thead-dark" style="background-color:black;">  
+      <th></th>
         <th>Knowledge Area</th>
         <th>Question</th>
         <th>Clarifications</th>
@@ -203,13 +366,14 @@ function tripleConstraint($array) {
             </tr>';
         }
         ?>
-
+      </thead>
       </table>
     </div>
 
     <div id="stramanagerisk" class="tabcontent">
       <h3>Strategic Management Risks</h3>
-      <table border="1">
+      <table class="table table-bordered" style="color:white;font-family: 'Inter', sans-serif;">
+      <thead class="thead-dark" style="background-color:black;">
         <th></th>
         <th>Knowledge Area</th>
         <th>Question</th>
@@ -239,13 +403,14 @@ function tripleConstraint($array) {
             </tr>';
         }
         ?>
-
+      </thead>
       </table>
     </div>
 
     <div id="procrisk" class="tabcontent">
       <h3>Procurement Risks</h3>
-      <table border="1">
+      <table class="table table-bordered" style="color:white;font-family: 'Inter', sans-serif;">
+      <thead class="thead-dark" style="background-color:black;">
         <th></th>
         <th>Knowledge Area</th>
         <th>Question</th>
@@ -275,13 +440,14 @@ function tripleConstraint($array) {
             </tr>';
         }
         ?>
-
+      </thead>
       </table>
     </div>
 
     <div id="hrrisk" class="tabcontent">
       <h3>Human Resource Risks</h3>
-      <table border="1">
+      <table class="table table-bordered" style="color:white;font-family: 'Inter', sans-serif;">
+      <thead class="thead-dark" style="background-color:black;">
         <th></th>
         <th>Knowledge Area</th>
         <th>Question</th>
@@ -311,13 +477,14 @@ function tripleConstraint($array) {
             </tr>';
         }
         ?>
-
+      </thead>
       </table>
     </div>
 
     <div id="busrisk" class="tabcontent">
       <h3>Business Risks</h3>
-      <table border="1">
+      <table class="table table-bordered" style="color:white;font-family: 'Inter', sans-serif;">
+      <thead class="thead-dark" style="background-color:black;">
         <th></th>
         <th>Knowledge Area</th>
         <th>Question</th>
@@ -347,13 +514,14 @@ function tripleConstraint($array) {
             </tr>';
         }
         ?>
-
+      </thead>
       </table>
     </div>
 
     <div id="pmirisk" class="tabcontent">
       <h3>Project Management Integration Risks</h3>
-      <table border="1">
+      <table class="table table-bordered" style="color:white;font-family: 'Inter', sans-serif;">
+      <thead class="thead-dark" style="background-color:black;">
         <th></th>
         <th>Knowledge Area</th>
         <th>Question</th>
@@ -383,13 +551,14 @@ function tripleConstraint($array) {
             </tr>';
         }
         ?>
-
+      </thead>
       </table>
     </div>
 
     <div id="prrisk" class="tabcontent">
       <h3>Project Requirement Risks</h3>
-      <table border="1">
+      <table class="table table-bordered" style="color:white;font-family: 'Inter', sans-serif;">
+      <thead class="thead-dark" style="background-color:black;">
         <th></th>
         <th>Knowledge Area</th>
         <th>Question</th>
@@ -419,7 +588,7 @@ function tripleConstraint($array) {
             </tr>';
         }
         ?>
-
+      </thead>
       </table>
     </div>
 

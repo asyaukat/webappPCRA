@@ -28,6 +28,7 @@ else
   <title></title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
   <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.3/font/bootstrap-icons.css">
 
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -37,13 +38,23 @@ else
 <body>
   <div class="navbar">
         <span> Project Complexity and Risk Assessment Tool </span>
-        <div class="div-right"><a class ="navlink active"  href="menu.php" >Project List</a>
+        <a href="projectRegister.php" style ="display:inline-block;margin-right:1%;margin-left:auto;"><button type="button"  class="btn btn-primary" ><i class="bi bi-plus"></i></button></a>  
+        <div class="div-right">
+        <a class ="navlink active"  href="menu.php" >Project List</a>
         <a class ="navlink" href="information.php"  >Information</a>
         <a class ="navlink" href="menu.php?action=logout"> Log Out</a>
       </div>
         
   </div>
  
+  <h1 style="color: red;display:block;width:100%;margin-left: auto;margin-right: auto;text-align:center"><?php 
+  if(isset($_SESSION['answered']) ){
+    if( $_SESSION['answered'] == 0){
+      echo "Please answer the questions before viewing the results";
+      unset($_SESSION['answered']);
+    }
+  }
+  ?></h1>
   
   <div style="height:80vh;width:80%;margin: 50px auto;border-radius:15px;color:white">
     <div style="text-align:center;width:100%">

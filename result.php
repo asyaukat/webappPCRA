@@ -8,6 +8,14 @@ if(!isset($_SESSION['member_id']) ||  empty($_SESSION['member_id'])){
 require_once "sql.php";
 if (isset($_SESSION['projectID']) && !empty($_SESSION['projectID'])) {
   $projectID = $_SESSION['projectID'];
+  $db = new crud();
+ $result = $db-> getAnsweredFromProject($projectID);
+  if($result['answered'] == 0) {
+    $_SESSION['answered'] = 0; 
+    header('Location: menuController.php');
+  }
+  else if($result['answered'] == 1){
+  }
 } else {
   header('Location: menu.php');
 }
@@ -17,6 +25,8 @@ if (isset($_SESSION['projectID']) && !empty($_SESSION['projectID'])) {
 <html>
 
 <head>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
   <style>
     body {
       font-family: Arial;
@@ -88,9 +98,96 @@ if (isset($_SESSION['projectID']) && !empty($_SESSION['projectID'])) {
 .navbar .navlink {
     font-size: 15px;
 }
+
+</style>
+<link rel="stylesheet" href="css/style.css">
+<style>
+body {font-family: Arial;}
+
+/* Style the tab */
+.tab {
+  overflow: hidden;
+  border: 1px solid #ccc;
+  background-color: #1B2430;
+  display: block;
+  
+}
+
+/* Style the buttons inside the tab */
+.tab button,.barlink {
+  background-color: inherit;
+  float: left;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  padding: 14px 16px;
+  transition: 0.3s;
+  font-weight:bold;
+  font-family: 'Inter', sans-serif;
+  font-size: 17px;
+  color: white;
+}
+
+.barlink {
+  background-color: inherit;
+  float: left;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  padding: 14px 16px;
+  transition: 0.3s;
+  font-weight:bold;
+  font-family: 'Inter', sans-serif;
+  font-size: 17px;
+  color: white;
+}
+
+/* Change background color of buttons on hover */
+.tab button:hover,.barlink:hover {
+  background-color: #ddd;
+  color: #1B2430;
+}
+
+/* Create an active/current tablink class */
+.tab button.active {
+  background-color: #ccc;
+  color:#4E235F;
+}
+
+/* Style the tab content */
+.tabcontent {
+  display: none;
+  padding: 6px 12px;
+  border: 1px solid #ccc;
+  border-top: none;
+}
+    h1 {
+    float:left;
+    text-align: center;
+    padding: 14px 16px;
+    color: #f2f2f2;
+    text-decoration: none;
+    font-size: 30px;
+    font-weight: bold;
+    font-family: 'Inter', sans-serif;
+    text-shadow: 3px 3px 6px black;
+    
+}
+h3 {
+  color:white;
+}
+
+td,th{
+      background-color: white;
+      color:black;
+    }
+
+    body{
+      color:white;
+    }
   </style>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
+ 
+ <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.3/font/bootstrap-icons.css">
 </head>
 
 <body>
@@ -101,6 +198,7 @@ if (isset($_SESSION['projectID']) && !empty($_SESSION['projectID'])) {
     </div>
   </div>
   <div class="tab">
+    <button class="tablinks" onclick="openSection(event, 'overall')">Overall</button>
     <button class="tablinks" onclick="openSection(event, 'projchar')">Project Characteristics</button>
     <button class="tablinks" onclick="openSection(event, 'stramanagerisk')">Strategic Management Risks</button>
     <button class="tablinks" onclick="openSection(event, 'procrisk')">Procurement Risks</button>
@@ -108,14 +206,56 @@ if (isset($_SESSION['projectID']) && !empty($_SESSION['projectID'])) {
     <button class="tablinks" onclick="openSection(event, 'busrisk')">Business Risks</button>
     <button class="tablinks" onclick="openSection(event, 'pmirisk')">Project Management Integration Risks</button>
     <button class="tablinks" onclick="openSection(event, 'prrisk')">Project Requirement Risks</button>
-    <button class="tablinks" onclick="openSection(event, 'overall')">Overall</button>
   </div>
+
+  <div id="overall" class="tabcontent">
+    <h3>Overall</h3>
+    <table class="table table-bordered" style="color:white;font-family: 'Inter', sans-serif;background-color:white">
+    <thead class="thead-dark">  
+          <th>Section</th>
+          <th>Score</th>
+      </thead>
+        <?php
+        $db = new crud();
+        $result = array();
+        for ($i = 1; $i <= 7; $i++) {
+          $result[] = $db->getSectionResultBySection($projectID, $i);
+        }
+        $total = 0;
+        $max = 0;
+        foreach ($result as $array) {
+          echo '<tr>
+        <td >' . $array['sectionname'] . '</td>
+        <td>' . $array['value'] . '/' . $array['maxscore'] . '</td>
+        </tr>';
+
+          $total += $array['value'];
+          $max += $array['maxscore'];
+        }
+
+        echo '<tr style="font-weight:bold">
+      <td >Overall</td>
+      <td>' . $total . '/' . $max . '</td>
+      </tr>';
+        ?>
+    </table>
+    <?php
+    echo '<br><div class="progress" style="height: 50px;">
+    <div class="progress-bar" role="progressbar" style="width: ' . $total / $max * 100 . '%;" aria-valuenow="' . $total . '" aria-valuemin="0" aria-valuemax="' . $max . '">' . $total . '/' . $max . '</div>
+    </div>';
+    $score = ($total / ($max * 0.7))*100;
+    $result = $db->getCRL($score);
+    echo 'Complexity and Risk Level: <strong>' . $result['name'] . '</strong><br>';
+    echo "Definition: " . $result['definition'];
+    ?>
+  </div>
+
 
   <div id="projchar" class="tabcontent">
     <h3>Project Characteristics</h3>
     <?php
 
-    $db = new crud;
+    
     $result = $db->getSectionResultBySection($projectID, 1);
     echo "<div class='display-6'>Section Score: " . $result['value'] . "/" . $result['maxscore'] . "</div>";
     echo '<br><div class="progress" style="height: 50px;">
@@ -222,52 +362,6 @@ if (isset($_SESSION['projectID']) && !empty($_SESSION['projectID'])) {
     ?>
     <div style="text-align: center;font-size:22px;">A high score may indicate that the project is not prepared to manage potential impacts on schedule, cost and scope as a result of poorly defined requirements. Even if the project is well defined, the requirements may be very complex in nature and the project will require a high degree of capacity in this area in order to be effectively managed.</div>
   </div>
-  <div id="overall" class="tabcontent">
-    <h3>Overall</h3>
-    <table class="table">
-      <thead>
-        <tr class="table-dark">
-          <th scope="col">Section</th>
-          <th scope="col">Score</th>
-        </tr>
-      </thead>
-      <tbody>
-        <?php
-        $result = array();
-        for ($i = 1; $i <= 7; $i++) {
-          $result[] = $db->getSectionResultBySection($projectID, $i);
-        }
-        $total = 0;
-        $max = 0;
-        foreach ($result as $array) {
-          echo '<tr>
-        <td scope="row">' . $array['sectionname'] . '</td>
-        <td>' . $array['value'] . '/' . $array['maxscore'] . '</td>
-        </tr>';
-
-          $total += $array['value'];
-          $max += $array['maxscore'];
-        }
-
-        echo '<tr class="table-dark">
-      <td scope="row" >Overall</td>
-      <td>' . $total . '/' . $max . '</td>
-      </tr>';
-        ?>
-      </tbody>
-    </table>
-    <?php
-    echo '<br><div class="progress" style="height: 50px;">
-    <div class="progress-bar" role="progressbar" style="width: ' . $total / $max * 100 . '%;" aria-valuenow="' . $total . '" aria-valuemin="0" aria-valuemax="' . $max . '">' . $total . '/' . $max . '</div>
-    </div>';
-    $score = ($total / ($max * 0.7))*100;
-    $result = $db->getCRL($score);
-    echo 'Complexity and Risk Level: <strong>' . $result['name'] . '</strong><br>';
-    echo "Definition: " . $result['definition'];
-    ?>
-  </div>
-
-  
   <script>
     function openSection(evt, cityName) {
       var i, tabcontent, tablinks;

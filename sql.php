@@ -221,7 +221,16 @@ class crud
     }
   }
 
+function getAnsweredFromProject($projectID){
+  $sql = "SELECT answered from project where projectid = ?";
+  $stmt = $this->getConnection()->prepare($sql);
+  $stmt->bindParam(1, $projectID);
+  $stmt->execute();
 
+  while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+    return $row;
+  }
+}
 
   function getSectionResultBySection($projectID, $sectionID)
   {

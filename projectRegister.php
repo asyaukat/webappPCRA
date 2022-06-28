@@ -15,31 +15,34 @@
         header('Location: login.php');
     }
 
-    if(!isset($_POST['pName']) || !isset($_POST['own']) || !isset($_POST['funds']) || !isset($_POST['pDur'])){
-        $failure = "Input cannot be blank!";
-    } else {
-        
-        $pName = $_POST['pName'];
-        $own = $_POST['own'];
-        $funds = $_POST['funds'];
-        $pDur = $_POST['pDur'];
-        $mode = $_POST['mode'];
-        $memberid = $_SESSION['member_id'];
-
-        if(strlen($pName) < 1 || strlen($own) < 1 || strlen($funds) < 1 || strlen($pDur) < 1){
+    if($_SERVER['REQUEST_METHOD'] == 'POST'){
+        if(!isset($_POST['pName']) || !isset($_POST['own']) || !isset($_POST['funds']) || !isset($_POST['pDur'])){
             $failure = "Input cannot be blank!";
         } else {
-            if(in_array($mode, array(""))){
-                $failure="Select mode for your project!";
+            
+            $pName = $_POST['pName'];
+            $own = $_POST['own'];
+            $funds = $_POST['funds'];
+            $pDur = $_POST['pDur'];
+            $mode = $_POST['mode'];
+            $memberid = $_SESSION['member_id'];
+    
+            if(strlen($pName) < 1 || strlen($own) < 1 || strlen($funds) < 1 || strlen($pDur) < 1){
+                $failure = "Input cannot be blank!";
             } else {
-                $result = $db->register($pName, $own, $funds, $pDur, $mode, $memberid);
-
-                if($result){
-                    $success = "Project Registration Success!";
+                if(in_array($mode, array(""))){
+                    $failure="Select mode for your project!";
+                } else {
+                    $result = $db->register($pName, $own, $funds, $pDur, $mode, $memberid);
+    
+                    if($result){
+                        $success = "Project Registration Success!";
+                    }
                 }
-            }
-        } 
+            } 
+        }
     }
+   
     
     /**USE pcrat;
 
@@ -68,7 +71,7 @@ CREATE TABLE project (
                 echo ("<p style='color:green;'>".htmlentities($success)."</p>\n");
             }
         ?>
-        <form method=POST>
+        <form method="POST">
             <table>
                 <tr>
                     <th for="pName">Project Name:</th>
