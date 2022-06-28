@@ -4,13 +4,16 @@ html,body{
     overflow: hidden;
 }
 body {
-    font-family: 'Heebo', sans-serif;
+    font-family: 'Inter', sans-serif;
     font-weight: 500;
+    background-color: #51557E;
+    background: rgb(129,103,151);
+background: radial-gradient(circle, rgba(129,103,151,1) 0%, rgba(81,85,126,1) 100%);
     
 }
 
 input[type="text"]{
-    font-family: 'Heebo', sans-serif;
+    font-family: 'Inter', sans-serif;
     font-weight: 500;
 }
 
@@ -20,7 +23,7 @@ input[type="text"]{
 
 
 .navbar {
-    background-color:#00B98E;
+    background-color: #1B2430;
     overflow: hidden;
 }
 
@@ -39,7 +42,15 @@ input[type="text"]{
 .navbar a:hover {
     background-color:#ddd;
     color:black;
+    text-shadow: none;
 }
+
+.navbar a.active {
+    background-color:#4E235F;
+    color:white;
+    text-shadow: none;
+}
+
 
 .navbar div.div-right {
     font-size: 15px;

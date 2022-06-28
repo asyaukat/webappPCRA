@@ -23,6 +23,7 @@ isset($_POST['maxscore'])){
     $maxscore = $_POST['maxscore'];
 
     $result = $db->updateComplexity($definition, $id);
+    header('Location: information.php');
 }
 
 $result = $db->readComplexity($_GET['id']);
@@ -50,5 +51,5 @@ foreach ($result as $read) {
 
     <input type="hidden" name="id" value="<?= $id ?>">
     <p><input type="submit" value="Update"/>
-    <a href="admin.php">Cancel</a></p>
+    <a href="information.php">Cancel</a></p>
 </form>

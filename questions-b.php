@@ -108,50 +108,15 @@ function tripleConstraint($array) {
       border: 1px solid #ccc;
       border-top: none;
     }
-
-    .navbar {
-    background-color:#00B98E;
-    overflow: hidden;
-}
-
-.navbar h2, .navbar a, .navbar span {
-    float:left;
-    text-align: center;
-    padding: 14px 16px;
-    color: #f2f2f2;
-    text-decoration: none;
-    font-size: 30px;
-    font-weight: bold;
-    font-family: 'Inter', sans-serif;
-    text-shadow: 3px 3px 6px black;
-}
-
-.navbar a:hover {
-    background-color:#ddd;
-    color:black;
-}
-
-.navbar div.div-right {
-    font-size: 15px;
-    float:right;
-}
-.navbar .navlink {
-    font-size: 15px;
-}
   </style>
-
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 </head>
 
 <body>
-  <div class="navbar">
-    <h2>Questions</h2>
-    <div class="div-right">
-      <a class="navlink" href="menu.php">Project List</a>
-    </div>
-  </div>
-  <p style="font-size: 26px; font-weight: bold; padding-top: 10px;">Sections</p>
+
+  <h2>Questions</h2>
+  <p>Sections</p>
   <button type="submit" form="form1">Submit All Answers</button>
+  <a href="menu.php"><button>Back to menu</button></a>
   <div class="tab">
     <button class="tablinks" onclick="openSection(event, 'instruction')">Instructions</button>
     <button class="tablinks" onclick="openSection(event, 'projchar')">Project Characteristics</button>
@@ -439,9 +404,6 @@ function tripleConstraint($array) {
       }
     </script>
   </form>
-  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 </body>
 
 </html>

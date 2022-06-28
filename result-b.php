@@ -58,48 +58,14 @@ if (isset($_SESSION['projectID']) && !empty($_SESSION['projectID'])) {
       border: 1px solid #ccc;
       border-top: none;
     }
-
-    .navbar {
-    background-color:#00B98E;
-    overflow: hidden;
-}
-
-.navbar h1, .navbar a, .navbar span {
-    float:left;
-    text-align: center;
-    padding: 14px 16px;
-    color: #f2f2f2;
-    text-decoration: none;
-    font-size: 30px;
-    font-weight: bold;
-    font-family: 'Inter', sans-serif;
-    text-shadow: 3px 3px 6px black;
-}
-
-.navbar a:hover {
-    background-color:#ddd;
-    color:black;
-}
-
-.navbar div.div-right {
-    font-size: 15px;
-    float:right;
-}
-.navbar .navlink {
-    font-size: 15px;
-}
   </style>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
 </head>
 
 <body>
-  <div class="navbar">
-    <h1>Summary and Result</h1><br>
-    <div class="div-right">
-      <a class="navlink" href="menu.php">Project List</a>
-    </div>
-  </div>
+  <h1>Summary and Result</h1><br>
+  <a href="menu.php"><button>Back to menu</button></a>
   <div class="tab">
     <button class="tablinks" onclick="openSection(event, 'projchar')">Project Characteristics</button>
     <button class="tablinks" onclick="openSection(event, 'stramanagerisk')">Strategic Management Risks</button>

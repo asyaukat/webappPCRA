@@ -20,7 +20,10 @@ else
 
 <head>
   <style>
-
+    td,th{
+      background-color: white;
+      color:black;
+    }
   </style>
   <title></title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
@@ -34,7 +37,7 @@ else
 <body>
   <div class="navbar">
         <span> Project Complexity and Risk Assessment Tool </span>
-        <div class="div-right"><a class ="navlink"  href="menu.php" >Project List</a>
+        <div class="div-right"><a class ="navlink active"  href="menu.php" >Project List</a>
         <a class ="navlink" href="information.php"  >Information</a>
         <a class ="navlink" href="menu.php?action=logout"> Log Out</a>
       </div>
@@ -42,12 +45,11 @@ else
   </div>
  
   
-  <div style="height:80vh;width:80%;background-color:white;margin: 50px auto">
+  <div style="height:80vh;width:80%;margin: 50px auto;border-radius:15px;color:white">
     <div style="text-align:center;width:100%">
-      <div style="display:inline-block;">
-        <h2> Project List</h2>
-        <table class="table">
-          <thead class="thead-dark">
+      <div style="display:inline-block;margin:20px;">
+        <table class="table table-bordered" style="color:white;font-family: 'Inter', sans-serif;">
+          <thead class="thead-dark" style="background-color:black;">
             <tr>
               <th scope="col">Project ID</th>
               <th scope="col">Project Name</th>

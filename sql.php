@@ -17,9 +17,9 @@ class crud
       // no db connection established: create one
       try{
           static::$db = new PDO(
-            'mysql:host=118.100.40.126;port=3306;dbname=pcrat',
-            'remote_user',
-            'asd123asd123');
+            'mysql:host=127.0.0.1;port=3307;dbname=pcrat',
+            'root',
+            '');
       }
 
       catch(PDOException $exception){
@@ -273,6 +273,53 @@ class crud
       }
       if(!empty($resultset)){
                   return $resultset;
+      }
+      else{
+        return array();
+      }
+    }
+    function complexity(){
+      $sql = "SELECT * FROM complexityrisklevel";
+      $stmt = $this->getConnection()->prepare($sql);
+      $stmt->execute();
+  
+      while ( $row =$stmt->fetch(PDO::FETCH_ASSOC) ) {
+        $resultset[] = $row;
+      }
+      if(!empty($resultset)){
+        return $resultset;
+      }
+      else{
+        return array();
+      }
+    }
+    
+    function readSection(){
+      $sql = "SELECT * FROM section";
+      $stmt = $this->getConnection()->prepare($sql);
+      $stmt->execute();
+  
+      while ( $row =$stmt->fetch(PDO::FETCH_ASSOC) ) {
+        $resultset[] = $row;
+      }
+      if(!empty($resultset)){
+        return $resultset;
+      }
+      else{
+        return array();
+      }
+    }
+  
+    function calcMethod(){
+      $sql = "SELECT * FROM calculationmethod";
+      $stmt = $this->getConnection()->prepare($sql);
+      $stmt->execute();
+  
+      while ( $row =$stmt->fetch(PDO::FETCH_ASSOC) ) {
+        $resultset[] = $row;
+      }
+      if(!empty($resultset)){
+        return $resultset;
       }
       else{
         return array();

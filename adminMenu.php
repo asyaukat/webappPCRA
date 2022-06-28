@@ -1,4 +1,6 @@
 <?php
+session_start();
+
     if(!empty($_POST)){
         if($_POST['action'] == 'logout'){
         session_destroy();
