@@ -8,22 +8,21 @@ class crud
 
   function __construct()
   {
-  
   }
-  
-  public function getConnection(){
 
-    if(static::$db === false) {
+  public function getConnection()
+  {
+
+    if (static::$db === false) {
       // no db connection established: create one
-      try{
-          static::$db = new PDO(
-            'mysql:host=127.0.0.1;port=3307;dbname=pcrat',
-            'root',
-            '');
-      }
-
-      catch(PDOException $exception){
-          echo "Connection error: " . $exception->getMessage();
+      try {
+        static::$db = new PDO(
+          'mysql:host=127.0.0.1;port=3307;dbname=pcrat',
+          'root',
+          ''
+        );
+      } catch (PDOException $exception) {
+        echo "Connection error: " . $exception->getMessage();
       }
     }
 
@@ -83,8 +82,8 @@ class crud
   function projectList($memberid)
   {
     $sql = "SELECT * FROM project where memberid = ? ";
-    $stmt =$this->getConnection()->prepare($sql);
-    $stmt->bindParam(1,$memberid);
+    $stmt = $this->getConnection()->prepare($sql);
+    $stmt->bindParam(1, $memberid);
     $stmt->execute();
 
     while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
@@ -148,6 +147,35 @@ class crud
     }
   }
 
+  function updateQuestion($question, $id){
+    $sql = "UPDATE question SET question=? WHERE id=?";
+    $stmt = $this->db->prepare($sql);
+    $stmt->bindParam(1,$question);
+    $stmt->bindParam(2,$id);
+
+    $stmt->execute();
+
+    if($stmt){
+      return $success = "success";
+    }
+
+  }
+
+  function updateRating($ratingtext, $value, $questionID){
+    $sql = "UPDATE rating SET ratingtext=? WHERE value=? AND questionID=?";
+    $stmt = $this->db->prepare($sql);
+    $stmt->bindParam(1,$ratingtext);
+    $stmt->bindParam(2,$value);
+    $stmt->bindParam(3,$questionID);
+
+    $stmt->execute();
+
+    if($stmt){
+      return $success = "success";
+    }
+
+  }
+
   function updateAnswer($answer, $projectID)
   {
     $sql = "update project_question set value = ? where projectid = ? and questionID = ?";
@@ -194,7 +222,7 @@ class crud
   }
 
 
-  
+
   function getSectionResultBySection($projectID, $sectionID)
   {
     $sql = "SELECT c.name as sectionname,sum(a.value)as value,c.maxscore as maxscore FROM project_question a JOIN question b ON (a.questionID = b.id), section c where a.projectID = ? and b.sectionID = ? and c.id = ?";
@@ -262,67 +290,67 @@ class crud
     }
   }
 
-  function readAQuestion($id){
+  function readAQuestion($id)
+  {
     $sql = "select id,knowledgearea,question,clarification from question where id= ?";
     $stmt = $this->getConnection()->prepare($sql);
-    $stmt->bindParam(1,$id);
-    $stmt ->execute();
+    $stmt->bindParam(1, $id);
+    $stmt->execute();
 
-    while ( $row =$stmt->fetch(PDO::FETCH_ASSOC) ) {
-        $resultset[] = $row;
-      }
-      if(!empty($resultset)){
-                  return $resultset;
-      }
-      else{
-        return array();
-      }
+    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+      $resultset[] = $row;
     }
-    function complexity(){
-      $sql = "SELECT * FROM complexityrisklevel";
-      $stmt = $this->getConnection()->prepare($sql);
-      $stmt->execute();
-  
-      while ( $row =$stmt->fetch(PDO::FETCH_ASSOC) ) {
-        $resultset[] = $row;
-      }
-      if(!empty($resultset)){
-        return $resultset;
-      }
-      else{
-        return array();
-      }
+    if (!empty($resultset)) {
+      return $resultset;
+    } else {
+      return array();
     }
-    
-    function readSection(){
-      $sql = "SELECT * FROM section";
-      $stmt = $this->getConnection()->prepare($sql);
-      $stmt->execute();
-  
-      while ( $row =$stmt->fetch(PDO::FETCH_ASSOC) ) {
-        $resultset[] = $row;
-      }
-      if(!empty($resultset)){
-        return $resultset;
-      }
-      else{
-        return array();
-      }
+  }
+  function complexity()
+  {
+    $sql = "SELECT * FROM complexityrisklevel";
+    $stmt = $this->getConnection()->prepare($sql);
+    $stmt->execute();
+
+    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+      $resultset[] = $row;
     }
-  
-    function calcMethod(){
-      $sql = "SELECT * FROM calculationmethod";
-      $stmt = $this->getConnection()->prepare($sql);
-      $stmt->execute();
-  
-      while ( $row =$stmt->fetch(PDO::FETCH_ASSOC) ) {
-        $resultset[] = $row;
-      }
-      if(!empty($resultset)){
-        return $resultset;
-      }
-      else{
-        return array();
-      }
+    if (!empty($resultset)) {
+      return $resultset;
+    } else {
+      return array();
     }
+  }
+
+  function readSection()
+  {
+    $sql = "SELECT * FROM section";
+    $stmt = $this->getConnection()->prepare($sql);
+    $stmt->execute();
+
+    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+      $resultset[] = $row;
+    }
+    if (!empty($resultset)) {
+      return $resultset;
+    } else {
+      return array();
+    }
+  }
+
+  function calcMethod()
+  {
+    $sql = "SELECT * FROM calculationmethod";
+    $stmt = $this->getConnection()->prepare($sql);
+    $stmt->execute();
+
+    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+      $resultset[] = $row;
+    }
+    if (!empty($resultset)) {
+      return $resultset;
+    } else {
+      return array();
+    }
+  }
 }

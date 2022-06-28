@@ -21,7 +21,7 @@ if (isset($_SESSION["locked"])) {
 
 
 if ($isLoggedIn) {
-    $util->redirect("../menu.php");
+    $util->redirect("../menuController.php");
 }
 
 if (!empty($_POST["login"])) {
@@ -56,6 +56,7 @@ if (!empty($_POST["login"])) {
 
     if ($isAuthenticated) {
         $_SESSION["member_id"] = $user[0]["member_id"];
+        $_SESSION["member_type"] = $user[0]["member_type"];
 
         // Set Auth Cookies if 'Remember Me' checked
         if (!empty($_POST["remember"])) {
@@ -83,7 +84,7 @@ if (!empty($_POST["login"])) {
             $util->clearAuthCookie();
         }
         unset($_SESSION["login_attempts"]);
-        $util->redirect("../menu.php");
+        $util->redirect("../menuController.php");
     }
 }
 ?>

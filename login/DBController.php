@@ -1,8 +1,8 @@
 <?php
 class DBController {
-	private $host = "118.100.40.126";
-	private $user = "remote_user";
-	private $password = "asd123asd123";
+	private $host = "127.0.0.1";
+	private $user = "root";
+	private $password = "";
 	private $database = "pcrat";
 	private $conn;
 	
@@ -11,7 +11,7 @@ class DBController {
 	}	
 	
 	function connectDB() {
-		$conn = mysqli_connect($this->host,$this->user,$this->password,$this->database);
+		$conn = mysqli_connect($this->host,$this->user,$this->password,$this->database,'3307');
 		return $conn;
 	}
 	

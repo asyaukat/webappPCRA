@@ -25,7 +25,7 @@ session_start();
         <h1>System Menu</h1>
         <p>Registered project: <a href="menu.php"> List of Project</a></p>
         <p>Modify Question: <a href="admin.php">Edit Question Link</a></p>
-        <p>Modify Information:<a href="information.php">Edit Information Link</a></p>
-        <form method="POST"><button name="action" value="logout">Log Out</button></form>
+        <p>Modify Information:<a href="informationAdmin.php">Edit Information Link</a></p>
+        <form method="POST" action="menuController.php"><button name="action" value="logout">Log Out</button></form>
     </body>
 </html>
